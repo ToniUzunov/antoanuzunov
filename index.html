@@ -1,86 +1,12 @@
-const db = globalThis.__B44_DB__ || { auth:{ isAuthenticated: async()=>false, me: async()=>null }, entities:new Proxy({}, { get:()=>({ filter:async()=>[], get:async()=>null, create:async()=>({}), update:async()=>({}), delete:async()=>({}) }) }), integrations:{ Core:{ UploadFile:async()=>({ file_url:'' }) } } };
-
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import SectionHeader from '../components/shared/SectionHeader';
-
-const BLINDSPOT_IMG = 'https://media.db.com/images/public/69ff0f6cd0375bf5d4d4b8ba/f5de4fe3c_generated_8884898e.png';
-const VELOCITY_IMG = 'https://media.db.com/images/public/69ff0f6cd0375bf5d4d4b8ba/6e5a8424d_generated_e4bd646f.png';
-const GT20_IMG = 'https://media.db.com/images/public/69ff0f6cd0375bf5d4d4b8ba/6a285886e_generated_f38d99c2.png';
-const CHASSIS_IMG = 'https://media.db.com/images/public/69ff0f6cd0375bf5d4d4b8ba/c7601d1f2_generated_37e39ce1.png';
-const TRACK_IMG = 'https://media.db.com/images/public/69ff0f6cd0375bf5d4d4b8ba/53ddaf371_generated_910d0d35.png';
-const HERO_IMG = 'https://media.db.com/images/public/69ff0f6cd0375bf5d4d4b8ba/8f19bd2fa_generated_45d9f6bc.png';
-
-const categories = ['All', 'BlindSpot Innovation', 'Velocity-X', 'GT 20 Under 20', 'Behind the Scenes'];
-
-const gallery = [
-  { src: BLINDSPOT_IMG, caption: 'BlindSpot Innovation — Assistive Technology', category: 'BlindSpot Innovation' },
-  { src: VELOCITY_IMG, caption: 'Velocity-X — Arctic EV Challenge', category: 'Velocity-X' },
-  { src: GT20_IMG, caption: 'GT 20 Under 20 — Innovation Event', category: 'GT 20 Under 20' },
-  { src: CHASSIS_IMG, caption: 'Building the Chassis Frame', category: 'Velocity-X' },
-  { src: TRACK_IMG, caption: 'Track Testing in Bucharest', category: 'Velocity-X' },
-  { src: HERO_IMG, caption: 'Behind the Scenes — Innovation Journey', category: 'Behind the Scenes' },
-];
-
-export default function Gallery() {
-  const [active, setActive] = useState('All');
-  const filtered = active === 'All' ? gallery : gallery.filter(g => g.category === active);
-
-  return (
-    <div className="pt-24 lg:pt-32 pb-24">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <SectionHeader
-          label="Gallery"
-          title="Visual proof."
-          description="A look behind the projects, the building process, and the moments that matter."
-        />
-
-        {/* Filters */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
-          {categories.map(cat => (
-            <button
-              key={cat}
-              onClick={() => setActive(cat)}
-              className={`px-4 py-2 text-sm font-body font-medium rounded-lg transition-all duration-300 ${
-                active === cat
-                  ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25'
-                  : 'text-muted-foreground bg-secondary/50 hover:text-foreground hover:bg-secondary'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <AnimatePresence mode="popLayout">
-            {filtered.map((item, i) => (
-              <motion.div
-                key={item.src + item.caption}
-                layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.4, delay: i * 0.05 }}
-                className="group relative rounded-2xl overflow-hidden border border-border/50 bg-card"
-              >
-                <img
-                  src={item.src}
-                  alt={item.caption}
-                  className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
-                  <div>
-                    <p className="font-body font-medium text-sm text-foreground">{item.caption}</p>
-                    <p className="font-body text-xs text-muted-foreground mt-1">{item.category}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
-      </div>
-    </div>
-  );
-}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Antoan Uzunov</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
