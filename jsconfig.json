@@ -1,20 +1,9 @@
-import React from 'react';
-import HeroSection from '../components/home/HeroSection';
-import CredibilityStrip from '../components/home/CredibilityStrip';
-import AboutPreview from '../components/home/AboutPreview';
-import FeaturedWork from '../components/home/FeaturedWork';
-import NowSection from '../components/home/NowSection';
-import CTASection from '../components/home/CTASection';
-
-export default function Home() {
-  return (
-    <>
-      <HeroSection />
-      <CredibilityStrip />
-      <AboutPreview />
-      <FeaturedWork />
-      <NowSection />
-      <CTASection />
-    </>
-  );
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src"]
 }
