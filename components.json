@@ -1,0 +1,143 @@
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Mail, Linkedin, Globe, Send, ArrowRight } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
+import SectionHeader from '../components/shared/SectionHeader';
+import GlassCard from '../components/shared/GlassCard';
+
+const contactLinks = [
+  { icon: Mail, label: 'toni.uzunovvv@gmail.com', href: 'mailto:toni.uzunovvv@gmail.com' },
+  { icon: Mail, label: 'antoan@blindspot-innovation.com', href: 'mailto:antoan@blindspot-innovation.com' },
+  { icon: Linkedin, label: 'LinkedIn Profile', href: 'https://www.linkedin.com/in/antoan-uzunov-0b6b9b408/' },
+  { icon: Globe, label: 'blindspot-innovation.com', href: 'https://blindspot-innovation.com' },
+];
+
+export default function Contact() {
+  const [form, setForm] = useState({ name: '', email: '', reason: '', message: '' });
+  const [sending, setSending] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!form.name || !form.email || !form.message) {
+      toast.error('Please fill in all required fields.');
+      return;
+    }
+    setSending(true);
+    // Simulate send
+    await new Promise(r => setTimeout(r, 1500));
+    toast.success('Message sent! Antoan will get back to you soon.');
+    setForm({ name: '', email: '', reason: '', message: '' });
+    setSending(false);
+  };
+
+  return (
+    <div className="pt-24 lg:pt-32 pb-24">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <SectionHeader
+          label="Contact"
+          title="Let's connect."
+          description="Whether you're an investor, recruiter, mentor, founder, client, collaborator, or someone interested in innovation and accessibility, I'd be happy to hear from you."
+        />
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
+          {/* Contact info */}
+          <div className="space-y-6">
+            {contactLinks.map((link, i) => (
+              <GlassCard key={i} delay={i * 0.1} className="p-5">
+                <a
+                  href={link.href}
+                  target={link.href.startsWith('mailto') ? undefined : '_blank'}
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-4 group"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-primary/5 border border-primary/10 flex items-center justify-center flex-shrink-0">
+                    <link.icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="font-body text-sm text-foreground/80 group-hover:text-primary transition-colors">{link.label}</span>
+                  <ArrowRight className="w-4 h-4 text-muted-foreground ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
+                </a>
+              </GlassCard>
+            ))}
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
+              className="p-6 rounded-2xl bg-gradient-to-br from-primary/5 to-transparent border border-primary/10"
+            >
+              <p className="font-body text-sm text-muted-foreground leading-relaxed">
+                Interested in collaborating, investing, mentoring, or connecting? I'd love to hear from you. I respond to most messages within 48 hours.
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Contact form */}
+          <GlassCard delay={0.2} className="p-8">
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div>
+                <label className="block font-body text-sm font-medium text-foreground mb-2">Name *</label>
+                <Input
+                  value={form.name}
+                  onChange={e => setForm({...form, name: e.target.value})}
+                  placeholder="Your name"
+                  className="bg-secondary/50 border-border/50 font-body"
+                />
+              </div>
+              <div>
+                <label className="block font-body text-sm font-medium text-foreground mb-2">Email *</label>
+                <Input
+                  type="email"
+                  value={form.email}
+                  onChange={e => setForm({...form, email: e.target.value})}
+                  placeholder="your@email.com"
+                  className="bg-secondary/50 border-border/50 font-body"
+                />
+              </div>
+              <div>
+                <label className="block font-body text-sm font-medium text-foreground mb-2">Reason for reaching out</label>
+                <Select value={form.reason} onValueChange={v => setForm({...form, reason: v})}>
+                  <SelectTrigger className="bg-secondary/50 border-border/50 font-body">
+                    <SelectValue placeholder="Select a reason" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="collaboration">Collaboration</SelectItem>
+                    <SelectItem value="investment">Investment</SelectItem>
+                    <SelectItem value="mentoring">Mentoring</SelectItem>
+                    <SelectItem value="speaking">Speaking / Event</SelectItem>
+                    <SelectItem value="media">Media / Press</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <label className="block font-body text-sm font-medium text-foreground mb-2">Message *</label>
+                <Textarea
+                  value={form.message}
+                  onChange={e => setForm({...form, message: e.target.value})}
+                  placeholder="Your message..."
+                  className="bg-secondary/50 border-border/50 font-body min-h-[120px]"
+                />
+              </div>
+              <Button
+                type="submit"
+                disabled={sending}
+                className="w-full bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/25 font-body font-semibold"
+              >
+                {sending ? (
+                  <div className="w-5 h-5 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin" />
+                ) : (
+                  <>Send Message <Send className="w-4 h-4 ml-2" /></>
+                )}
+              </Button>
+            </form>
+          </GlassCard>
+        </div>
+      </div>
+    </div>
+  );
+}

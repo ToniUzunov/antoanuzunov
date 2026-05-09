@@ -1,0 +1,92 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Clock, Tag } from 'lucide-react';
+import SectionHeader from '../components/shared/SectionHeader';
+import GlassCard from '../components/shared/GlassCard';
+
+const articles = [
+  {
+    title: 'Why Accessibility Needs More Practical Innovation',
+    description: 'Exploring the gap between existing assistive technology and real-world user needs, and why practical, user-centered innovation is the path forward.',
+    category: 'Accessibility',
+    readTime: '5 min read',
+  },
+  {
+    title: 'What Building an Electric Vehicle at 13 Taught Me About Entrepreneurship',
+    description: 'Lessons in leadership, teamwork, problem-solving, and resilience learned from the Velocity-X Arctic EV project.',
+    category: 'Entrepreneurship',
+    readTime: '7 min read',
+  },
+  {
+    title: 'The Future of Assistive Technology for Blind and Visually Impaired People',
+    description: 'A look at where assistive technology is heading and how innovation can create safer, more independent lives.',
+    category: 'Technology',
+    readTime: '6 min read',
+  },
+  {
+    title: 'What I\'m Learning from GT 20 Under 20',
+    description: 'Insights and takeaways from being part of a community of young innovators, entrepreneurs, and mentors.',
+    category: 'Youth Innovation',
+    readTime: '4 min read',
+  },
+  {
+    title: 'How Young Builders Can Turn Ideas Into Real Projects',
+    description: 'Practical advice for young people who want to stop dreaming and start building technology that makes a difference.',
+    category: 'Product Development',
+    readTime: '5 min read',
+  },
+];
+
+const categoryColors = {
+  'Accessibility': 'text-primary bg-primary/10 border-primary/20',
+  'Entrepreneurship': 'text-blue-400 bg-blue-400/10 border-blue-400/20',
+  'Technology': 'text-cyan-400 bg-cyan-400/10 border-cyan-400/20',
+  'Youth Innovation': 'text-indigo-400 bg-indigo-400/10 border-indigo-400/20',
+  'Product Development': 'text-violet-400 bg-violet-400/10 border-violet-400/20',
+};
+
+export default function Blog() {
+  return (
+    <div className="pt-24 lg:pt-32 pb-24">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <SectionHeader
+          label="Blog"
+          title="Thoughts & insights."
+          description="Writing about entrepreneurship, accessibility, product development, and the lessons learned from building real projects."
+        />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {articles.map((article, i) => (
+            <GlassCard key={i} delay={i * 0.1} className="p-6 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className={`px-3 py-1 text-xs font-body font-medium rounded-full border ${categoryColors[article.category]}`}>
+                    {article.category}
+                  </span>
+                </div>
+                <h3 className="font-heading font-bold text-lg text-foreground mb-3 leading-snug">{article.title}</h3>
+                <p className="font-body text-sm text-muted-foreground leading-relaxed">{article.description}</p>
+              </div>
+              <div className="flex items-center gap-2 mt-6 text-xs text-muted-foreground font-body">
+                <Clock className="w-3.5 h-3.5" />
+                {article.readTime}
+              </div>
+            </GlassCard>
+          ))}
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+          className="text-center mt-16"
+        >
+          <p className="font-body text-muted-foreground text-sm">
+            More articles coming soon. Stay tuned.
+          </p>
+        </motion.div>
+      </div>
+    </div>
+  );
+}
